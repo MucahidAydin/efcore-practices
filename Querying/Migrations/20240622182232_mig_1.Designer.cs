@@ -11,7 +11,7 @@ using Querying.Contexts;
 namespace Querying.Migrations
 {
     [DbContext(typeof(ETicaretContext))]
-    [Migration("20240622134346_mig_1")]
+    [Migration("20240622182232_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
