@@ -11,7 +11,7 @@ using Querying.Contexts;
 namespace Querying.Migrations
 {
     [DbContext(typeof(ETicaretContext))]
-    [Migration("20240622182232_mig_1")]
+    [Migration("20240622215121_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
@@ -66,23 +66,15 @@ namespace Querying.Migrations
 
             modelBuilder.Entity("Querying.Entities.UrunParca", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("UrunId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ParcaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UrunId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("UrunId", "ParcaId");
 
                     b.HasIndex("ParcaId");
-
-                    b.HasIndex("UrunId");
 
                     b.ToTable("UrunParcalar");
                 });

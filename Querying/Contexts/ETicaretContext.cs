@@ -20,6 +20,12 @@ namespace Querying.Contexts
             // Lazy Loading
             // vb.
         }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // many to many iliski icin composite key tanimlamasi
+            modelBuilder.Entity<UrunParca>().HasKey(up => new { up.UrunId, up.ParcaId });
+        }
 
     }
 }

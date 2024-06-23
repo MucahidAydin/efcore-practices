@@ -63,23 +63,15 @@ namespace Querying.Migrations
 
             modelBuilder.Entity("Querying.Entities.UrunParca", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("UrunId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ParcaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UrunId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("UrunId", "ParcaId");
 
                     b.HasIndex("ParcaId");
-
-                    b.HasIndex("UrunId");
 
                     b.ToTable("UrunParcalar");
                 });

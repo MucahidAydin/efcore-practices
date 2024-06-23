@@ -42,14 +42,12 @@ namespace Querying.Migrations
                 name: "UrunParcalar",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UrunId = table.Column<int>(type: "int", nullable: false),
                     ParcaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UrunParcalar", x => x.Id);
+                    table.PrimaryKey("PK_UrunParcalar", x => new { x.UrunId, x.ParcaId });
                     table.ForeignKey(
                         name: "FK_UrunParcalar_Parcalar_ParcaId",
                         column: x => x.ParcaId,
@@ -68,11 +66,6 @@ namespace Querying.Migrations
                 name: "IX_UrunParcalar_ParcaId",
                 table: "UrunParcalar",
                 column: "ParcaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UrunParcalar_UrunId",
-                table: "UrunParcalar",
-                column: "UrunId");
         }
 
         /// <inheritdoc />
