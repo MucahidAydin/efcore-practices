@@ -62,31 +62,85 @@ using Querying.Entities;
 //---
 
 //#15
+//ETicaretContext context = new();
+
+////// Single, SingleOrDefault
+//var urun1 = await context.Urunler.SingleAsync(u => u.Id == 60000000);
+//Console.WriteLine(urun1.UrunAdi);
+
+//var urun2 = await context.Urunler.SingleOrDefaultAsync(u => u.Id == 60000000);
+//Console.WriteLine(urun2?.UrunAdi);
+
+//// Single ile First arasındaki fark: Single tek bir kayıt döner, First ise bir veya daha fazla kayıt olsa da sadece ilk kaydı döner.
+
+////// First,FirstOrDefault
+//var urun3 = await context.Urunler.FirstAsync(u => u.Id > 5);
+//Console.WriteLine(urun3.UrunAdi);
+
+//var urun4 = await context.Urunler.FirstOrDefaultAsync(u => u.Id == 60000000);
+//Console.WriteLine(urun4?.UrunAdi);
+
+////// Find, Composite Key => Sadece primary key ile calisir
+//var urun5 = await context.Urunler.FindAsync(5);
+//Console.WriteLine(urun5?.UrunAdi);
+
+//var urunParca1 = await context.UrunParcalar.FindAsync(urun5?.Id, 303);
+//Console.WriteLine($"{urunParca1?.UrunId} - {urunParca1?.ParcaId}");
+
+//////LastOrDefault
+//var urun6 = await context.Urunler.OrderBy(u => u.Id).LastOrDefaultAsync();
+//Console.WriteLine(urun6?.UrunAdi);
+
+
+//#16
 ETicaretContext context = new();
 
-//// Single, SingleOrDefault
-var urun1 = await context.Urunler.SingleAsync(u => u.Id == 60000000);
-Console.WriteLine(urun1.UrunAdi);
+//toListAsync() kullanmayan sorgular => CountAsync, AnyAsync, MaxAsync, MinAsync, AllAsync, SumAsync, AverageAsync
+var urunCount = await context.Urunler.CountAsync(); // int tipinde doner.
+Console.WriteLine($"Toplam urun sayisi: {urunCount}");
 
-var urun2 = await context.Urunler.SingleOrDefaultAsync(u => u.Id == 60000000);
-Console.WriteLine(urun2?.UrunAdi);
+var urunCount2 = await context.Urunler.LongCountAsync(); // long tipinde doner.
+Console.WriteLine($"Toplam urun sayisi: {urunCount2}");
 
-// Single ile First arasındaki fark: Single tek bir kayıt döner, First ise bir veya daha fazla kayıt olsa da sadece ilk kaydı döner.
+var urunCheck = await context.Urunler.Where(u => u.UrunAdi.Contains("B")).AnyAsync();// where sorgusu sonucunda bir kayit varsa true doner.
+Console.WriteLine($"Urun adinda 'B' harfi olan urun var mi: {urunCheck}");
 
-//// First,FirstOrDefault
-var urun3 = await context.Urunler.FirstAsync(u => u.Id > 5);
-Console.WriteLine(urun3.UrunAdi);
+var urunMax = await context.Urunler.MaxAsync(u => u.Fiyat);
+Console.WriteLine($"En yuksek fiyat: {urunMax}");
 
-var urun4 = await context.Urunler.FirstOrDefaultAsync(u => u.Id == 60000000);
-Console.WriteLine(urun4?.UrunAdi);
+var urunMin = await context.Urunler.MinAsync(u => u.Fiyat);
+Console.WriteLine($"En dusuk fiyat: {urunMin}");
 
-//// Find, Composite Key => Sadece primary key ile calisir
-var urun5 = await context.Urunler.FindAsync(5);
-Console.WriteLine(urun5?.UrunAdi);
+var urunler = await context.Urunler.AllAsync(u => u.Fiyat > 0);// Tum urunlerin fiyati 0'dan buyuk mu? true/false doner.
+Console.WriteLine($"Tum urunlerin fiyati 0'dan buyuk mu: {urunler}");
 
-var urunParca1 = await context.UrunParcalar.FindAsync(urun5?.Id, 303);
-Console.WriteLine($"{urunParca1?.UrunId} - {urunParca1?.ParcaId}");
+var toplamFiyat = await context.Urunler.SumAsync(u => u.Fiyat);// Fiyat sutunundaki degerlerin toplamini doner.
+Console.WriteLine($"Toplam fiyat: {toplamFiyat}");
 
-////LastOrDefault
-var urun6 = await context.Urunler.OrderBy(u => u.Id).LastOrDefaultAsync();
-Console.WriteLine(urun6?.UrunAdi);
+var ortalamaFiyat = await context.Urunler.AverageAsync(u => u.Fiyat);// Fiyat sutunundaki degerlerin ortalamasini doner.
+Console.WriteLine($"Ortalama fiyat: {ortalamaFiyat}");
+
+//toListAsync() kullanan sorgular => Distinct, StartsWith, EndsWith, Contains
+var UrunAdlari = await context.Urunler.Select(u => u.UrunAdi).Distinct().ToListAsync();// UrunAdi sutunundaki degerlerden tekrar edenleri cikarir.
+foreach (var UrunAdi in UrunAdlari)
+{
+    Console.WriteLine(UrunAdi);
+}
+
+var urunler2 = await context.Urunler.Where(u => u.UrunAdi.StartsWith("B")).ToListAsync();// UrunAdi sutununda 'B' ile baslayan urunleri getirir.
+foreach (var urun in urunler2)
+{
+    Console.WriteLine(urun.UrunAdi);
+}
+
+var urunler3 = await context.Urunler.Where(u => u.UrunAdi.EndsWith("r")).ToListAsync();// UrunAdi sutununda 'r' ile biten urunleri getirir.
+foreach (var urun in urunler3)
+{
+    Console.WriteLine(urun.UrunAdi);
+}
+
+var urunler4 = await context.Urunler.Where(u => u.UrunAdi.Contains("B")).ToListAsync();// UrunAdi sutununda 'B' harfi gecen urunleri getirir.
+foreach (var urun in urunler4)
+{
+    Console.WriteLine(urun.UrunAdi);
+}
