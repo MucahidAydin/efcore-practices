@@ -146,46 +146,71 @@ using Querying.Entities;
 //}
 
 
-//#17
+////#17
+//ETicaretContext context = new();
+
+//var urunler = await context.Urunler.ToDictionaryAsync(u => u.Id, u => u.UrunAdi);// Urunler tablosundaki Id ve UrunAdi sutunlarini dictionary tipinde doner.
+
+//foreach (var urun in urunler)
+//{
+//    //[9996, Urun-ceff2522-c5f7-4fbc-a09f-87566e5c4fb7]
+//    Console.WriteLine(urun);
+//}
+
+//var urunler2 = await context.Urunler.ToArrayAsync();// Urunler Dbset'te belirtilen entity tipinde verileri döner. örn: [Urun, Urun, Urun, ...]
+//foreach (var urun in urunler2)
+//{
+//    Console.WriteLine($"{urun.UrunAdi} - {urun.Fiyat}");
+//}
+
+//var urunler3 = await context.Urunler.Select(u => new { u.UrunAdi, u.Fiyat }).ToArrayAsync();// Urunler tablosundan sadece UrunAdi ve Fiyat sutunlarini doner.
+//foreach (var urun in urunler3)
+//{
+//    Console.WriteLine($"{urun.UrunAdi} - {urun.Fiyat}");
+//}
+
+
+
+//var urunler4 = await context.Urunler.Include(u => u.UrunParcalar).SelectMany(u => u.UrunParcalar, (u, urunparca) => new { u.UrunAdi, urunparca.ParcaId }).ToArrayAsync();// Urunler tablosundan UrunAdi ve UrunParcalar tablosundan ParcaId sutunlarini doner. many to many iliskiyi OnModelCreating metodunda tanimladik.
+//foreach (var urun in urunler4)
+//{
+//    Console.WriteLine(urun);
+//}
+
+////SelectMany alternatif
+//var urunler5 = await (from u in context.Urunler
+//                      from up in u.UrunParcalar
+//                      select new
+//                      {
+//                          u.UrunAdi,
+//                          up.ParcaId
+//                      }).ToArrayAsync();
+//foreach (var urun in urunler5)
+//{
+//    Console.WriteLine(urun);
+//}
+
+
+//18
 ETicaretContext context = new();
 
-var urunler = await context.Urunler.ToDictionaryAsync(u => u.Id, u => u.UrunAdi);// Urunler tablosundaki Id ve UrunAdi sutunlarini dictionary tipinde doner.
-
-foreach (var urun in urunler)
+//Method Syntax
+var datas = await context.Urunler.GroupBy(u => u.UrunAdi).Select(g => new { UrunAdi = g.Key, ToplamFiyat = g.Sum(u => u.Fiyat) }).ToListAsync();// Urunler tablosundaki UrunAdi sutununa gore gruplar ve her grup icin Fiyat sutunundaki degerlerin toplamini doner.
+foreach (var data in datas)
 {
-    //[9996, Urun-ceff2522-c5f7-4fbc-a09f-87566e5c4fb7]
-    Console.WriteLine(urun);
+    Console.WriteLine($"{data.UrunAdi} - {data.ToplamFiyat}");
 }
 
-var urunler2 = await context.Urunler.ToArrayAsync();// Urunler Dbset'te belirtilen entity tipinde verileri döner. örn: [Urun, Urun, Urun, ...]
-foreach (var urun in urunler2)
-{
-    Console.WriteLine($"{urun.UrunAdi} - {urun.Fiyat}");
-}
+//Query Syntax
+var datas2 = await (from u in context.Urunler
+                    group u by u.UrunAdi into g
+                    select new
+                    {
+                        UrunAdi = g.Key,
+                        ToplamFiyat = g.Sum(u => u.Fiyat)
+                    }).ToListAsync();
 
-var urunler3 = await context.Urunler.Select(u => new { u.UrunAdi, u.Fiyat }).ToArrayAsync();// Urunler tablosundan sadece UrunAdi ve Fiyat sutunlarini doner.
-foreach (var urun in urunler3)
-{
-    Console.WriteLine($"{urun.UrunAdi} - {urun.Fiyat}");
-}
-
-
-
-var urunler4 = await context.Urunler.Include(u => u.UrunParcalar).SelectMany(u => u.UrunParcalar, (u, urunparca) => new { u.UrunAdi, urunparca.ParcaId }).ToArrayAsync();// Urunler tablosundan UrunAdi ve UrunParcalar tablosundan ParcaId sutunlarini doner. many to many iliskiyi OnModelCreating metodunda tanimladik.
-foreach (var urun in urunler4)
-{
-    Console.WriteLine(urun);
-}
-
-//SelectMany alternatif
-var urunler5 = await (from u in context.Urunler
-                      from up in u.UrunParcalar
-                      select new
-                      {
-                          u.UrunAdi,
-                          up.ParcaId
-                      }).ToArrayAsync();
-foreach (var urun in urunler5)
-{
-    Console.WriteLine(urun);
-}
+//foreach alternatif
+datas2.ForEach(data => {
+    Console.WriteLine($"{data.UrunAdi} - {data.ToplamFiyat}");
+});
