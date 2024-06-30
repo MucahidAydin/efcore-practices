@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCoreCRUD", "EFCoreCRUD\EF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Querying", "Querying\Querying.csproj", "{CB7F52E2-CCF1-40D5-84F0-75BF1B8509F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq", "Linq\Linq.csproj", "{EE4EBF19-1299-40E1-A9CD-31161AE4AA67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linq", "Linq\Linq.csproj", "{EE4EBF19-1299-40E1-A9CD-31161AE4AA67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChangeTracker", "ChangeTracker\ChangeTracker.csproj", "{23F17496-E9F5-4D1A-B4D4-153233E54013}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeTracker", "ChangeTracker\ChangeTracker.csproj", "{23F17496-E9F5-4D1A-B4D4-153233E54013}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking", "Tracking\Tracking.csproj", "{B1D489EE-316E-44E0-A3C2-35D28ACA9530}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{23F17496-E9F5-4D1A-B4D4-153233E54013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23F17496-E9F5-4D1A-B4D4-153233E54013}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23F17496-E9F5-4D1A-B4D4-153233E54013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1D489EE-316E-44E0-A3C2-35D28ACA9530}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1D489EE-316E-44E0-A3C2-35D28ACA9530}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1D489EE-316E-44E0-A3C2-35D28ACA9530}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1D489EE-316E-44E0-A3C2-35D28ACA9530}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
