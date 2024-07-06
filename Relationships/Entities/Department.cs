@@ -9,8 +9,9 @@ namespace Relationships.Entities
     public class Department
     {
         public int Id { get; set; }
-        public string Ad { get; set; }
-        public int OgretmenId { get; set; }
+        public string Name { get; set; }
+
+        public int TeacherId { get; set; }
 
         public Teacher Teacher { get; set; }
     }

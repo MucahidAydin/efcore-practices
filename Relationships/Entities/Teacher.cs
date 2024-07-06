@@ -9,9 +9,10 @@ namespace Relationships.Entities
     public class Teacher
     {
         public int Id { get; set; }
-        public string Isım { get; set; }
+        public string Name { get; set; }
 
         public Office Office { get; set; }
+        public List<Course> Courses { get; set; }
         public List<Department> Departments { get; set; }
 
     }

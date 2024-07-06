@@ -9,8 +9,7 @@ namespace Relationships.Entities
     public class Office
     {
         public int Id { get; set; }
-        public int Numara { get; set; }
-        public int OgretmenId { get; set; }
+        public int Number { get; set; }
 
         public Teacher Teacher { get; set; }
     }

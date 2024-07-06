@@ -9,10 +9,11 @@ namespace Relationships.Entities
     public class Course
     {
         public int Id { get; set; }
-        public string DersAdi { get; set; }
-        public int OgretmenId { get; set; }
+        public string CourseName { get; set; }
 
-        public List<StudentCourse> students { get; set; }
+        public int TeacherId { get; set; }
 
+        public Teacher Teacher { get; set; }
+        public List<StudentCourse> Students { get; set; }
     }
 }
