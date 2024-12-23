@@ -1,1 +1,1 @@
-# efcore-tutorials
+# efcore-practices
